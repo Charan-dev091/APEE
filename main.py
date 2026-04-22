@@ -41,12 +41,13 @@ logger = logging.getLogger(__name__)
 LOG_DIR = Path(os.getenv("LOG_DIR", "./logs"))
 LOG_DIR.mkdir(exist_ok=True)
 
-# ── Shared imports ────────────────────────────────────────────────────────────
-from src.agents.consensus_gate    import consensus_gate
+# ── Framework core imports ───────────────────────────────────────────────────
+from src.core.consensus_gate      import consensus_gate
 from src.security.passkey         import BiometricPasskey
 from src.security.mandate_manager import AsyncMandateManager
 from src.security.webhook_server  import start_webhook_server
 from src.alerts                   import AlertSystem
+from src.router.intent_router     import IntentRouter
 
 # ── Config ────────────────────────────────────────────────────────────────────
 GROQ_API_KEY     = os.getenv("GROQ_API_KEY", "")
@@ -143,14 +144,16 @@ class GateLogger:
 # ── Trading Pipeline ──────────────────────────────────────────────────────────
 async def run_trading(ws: WSBroadcaster, mandate_mgr: AsyncMandateManager,
                       alerts: AlertSystem, config: dict):
-    from src.mcp.hub_trading         import MCPHub
-    from src.agents.scout_trading    import DataScout
-    from src.agents.quant_trading    import QuantAgent
-    from src.agents.visionary_trading import VisionaryAgent
-    from src.agents.sentiment        import SentimentAnalyzer
-    from src.agents.auditor          import AuditorAgent
-    from src.trading.paymaster       import Paymaster
-    from src.commerce.checkout       import CommerceAgent
+    # ── POC 1: Trading domain plugin ─────────────────────────────────────────
+    from src.domains.trading.feed      import MCPHub
+    from src.domains.trading.scout     import DataScout
+    from src.domains.trading.quant     import QuantAgent
+    from src.domains.trading.visionary import VisionaryAgent
+    from src.domains.trading.paymaster import Paymaster
+    # ── Framework core components ────────────────────────────────────────────
+    from src.core.sentiment            import SentimentAnalyzer
+    from src.core.auditor              import AuditorAgent
+    from src.commerce.checkout         import CommerceAgent
 
     groq_client = None
     if GROQ_API_KEY:
@@ -283,12 +286,14 @@ async def run_trading(ws: WSBroadcaster, mandate_mgr: AsyncMandateManager,
 
 # ── E-Commerce Pipeline ───────────────────────────────────────────────────────
 async def run_ecommerce(ws: WSBroadcaster, alerts: AlertSystem, config: dict):
-    from src.mcp.hub_ecommerce          import EcommerceMCPHub
-    from src.agents.scout_ecommerce     import ProductScout
-    from src.agents.quant_ecommerce     import PriceQuant
-    from src.agents.visionary_ecommerce import PriceVisionary
-    from src.agents.consensus_gate      import consensus_gate as ec_gate
-    from src.commerce.paymaster_ecommerce import EcommercePaymaster
+    # ── POC 2: E-Commerce domain plugin ─────────────────────────────────────
+    from src.domains.ecommerce.feed      import EcommerceMCPHub
+    from src.domains.ecommerce.scout     import ProductScout
+    from src.domains.ecommerce.quant     import PriceQuant
+    from src.domains.ecommerce.visionary import PriceVisionary
+    from src.domains.ecommerce.paymaster import EcommercePaymaster
+    # ── Framework core (shared, unchanged) ──────────────────────────────────
+    from src.core.consensus_gate         import consensus_gate as ec_gate
 
     groq_client = None
     if GROQ_API_KEY:
