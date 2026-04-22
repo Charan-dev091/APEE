@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:      #05070f;
+  --bg1:     #080b16;
+  --bg2:     #0c1020;
+  --bg3:     #111528;
+  --bg4:     #161b30;
+  --border:  #1c2340;
+  --border2: #253060;
+  --border3: #2d3a72;
+  --text:    #c8d8f8;
+  --text2:   #6878a8;
+  --text3:   #3a4468;
+  --green:   #00e5a0;
+  --green2:  #00ff88;
+  --red:     #ff3366;
+  --red2:    #ff1a50;
+  --blue:    #0088ff;
+  --blue2:   #4db8ff;
+  --yellow:  #ffd600;
+  --purple:  #9f44ff;
+  --cyan:    #00d4ff;
+  --orange:  #ff8800;
+  --glow-g:  rgba(0,229,160,.18);
+  --glow-b:  rgba(0,136,255,.18);
+  --glow-r:  rgba(255,51,102,.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ── Cards ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,136,255,.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.card-glow-g { border-color: rgba(0,229,160,.3); box-shadow: 0 0 20px rgba(0,229,160,.06), inset 0 0 20px rgba(0,229,160,.02); }
+.card-glow-r { border-color: rgba(255,51,102,.3); box-shadow: 0 0 20px rgba(255,51,102,.06), inset 0 0 20px rgba(255,51,102,.02); }
+.card-glow-b { border-color: rgba(0,136,255,.3);  box-shadow: 0 0 20px rgba(0,136,255,.06),  inset 0 0 20px rgba(0,136,255,.02); }
+
+/* ── Scanline overlay ────────────────────────────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.08) 2px, rgba(0,0,0,.08) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Pills / Badges ─────────────────────────────────────────────────────── */
+.pill { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: 2px; font-size: 10px; font-weight: 700; letter-spacing: .08em; font-family: 'JetBrains Mono', monospace; }
+.pill-buy     { background: rgba(0,229,160,.12);  color: var(--green);  border: 1px solid rgba(0,229,160,.35); }
+.pill-sell    { background: rgba(255,51,102,.12);  color: var(--red);    border: 1px solid rgba(255,51,102,.35); }
+.pill-hold    { background: rgba(255,214,0,.1);    color: var(--yellow); border: 1px solid rgba(255,214,0,.3); }
+.pill-execute { background: rgba(0,229,160,.12);  color: var(--green);  border: 1px solid rgba(0,229,160,.35); }
+.pill-review  { background: rgba(255,136,0,.1);   color: var(--orange); border: 1px solid rgba(255,136,0,.3); }
+.pill-long    { background: rgba(0,229,160,.12);  color: var(--green);  border: 1px solid rgba(0,229,160,.35); }
+.pill-short   { background: rgba(255,51,102,.12);  color: var(--red);    border: 1px solid rgba(255,51,102,.35); }
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn { padding: 7px 18px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; transition: all .15s; border: none; text-transform: uppercase; }
+.btn-primary { background: var(--blue); color: #fff; box-shadow: 0 0 16px rgba(0,136,255,.3); }
+.btn-primary:hover { background: #0077ee; box-shadow: 0 0 24px rgba(0,136,255,.5); }
+.btn-green { background: rgba(0,229,160,.1); border: 1px solid rgba(0,229,160,.45); color: var(--green); }
+.btn-green:hover { background: rgba(0,229,160,.22); box-shadow: 0 0 12px rgba(0,229,160,.2); }
+.btn-red { background: rgba(255,51,102,.1); border: 1px solid rgba(255,51,102,.4); color: var(--red); }
+.btn-red:hover { background: rgba(255,51,102,.22); box-shadow: 0 0 12px rgba(255,51,102,.2); }
+
+/* ── Tables ─────────────────────────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { color: var(--text3); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid rgba(28,35,64,.6); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+.data-table tr:hover td { background: rgba(0,136,255,.04); }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ── Ticker tape ────────────────────────────────────────────────────────── */
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.ticker-wrap { overflow:hidden; background:var(--bg1); border-bottom:1px solid var(--border); height:28px; display:flex; align-items:center; }
+.ticker-inner { display:flex; animation:ticker 50s linear infinite; width:max-content; }
+
+/* ── Chat ───────────────────────────────────────────────────────────────── */
+.bubble-user { background: rgba(0,136,255,.12); border: 1px solid rgba(0,136,255,.25); border-radius: 8px 8px 2px 8px; padding: 10px 14px; max-width: 75%; }
+.bubble-apee { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px 8px 8px 2px; padding: 10px 14px; max-width: 80%; }
+.chat-input { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; color: var(--text); font-family: Inter,sans-serif; font-size: 13px; outline: none; resize: none; width: 100%; transition: border-color .15s; }
+.chat-input:focus { border-color: rgba(0,136,255,.5); box-shadow: 0 0 12px rgba(0,136,255,.08); }
+.chat-input::placeholder { color: var(--text3); }
+.mode-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; cursor: pointer; transition: all .2s; }
+.mode-card:hover { border-color: var(--border3); background: var(--bg3); transform: translateY(-1px); }
+
+/* ── Number glow ────────────────────────────────────────────────────────── */
+.num-green { color: var(--green); text-shadow: 0 0 12px rgba(0,229,160,.5); }
+.num-red   { color: var(--red);   text-shadow: 0 0 12px rgba(255,51,102,.5); }
+.num-blue  { color: var(--blue2); text-shadow: 0 0 12px rgba(77,184,255,.4); }
+.num-yellow{ color: var(--yellow);text-shadow: 0 0 12px rgba(255,214,0,.4); }
+
+/* ── Live pulse ─────────────────────────────────────────────────────────── */
+@keyframes pulse-ring { 0%{transform:scale(.8);opacity:1} 100%{transform:scale(2.2);opacity:0} }
+.live-dot { position:relative; display:inline-block; width:8px; height:8px; }
+.live-dot::before { content:''; position:absolute; inset:0; border-radius:50%; background:var(--green); }
+.live-dot::after  { content:''; position:absolute; inset:0; border-radius:50%; background:var(--green); animation:pulse-ring 1.8s ease-out infinite; }
+
+/* ── Nav item ───────────────────────────────────────────────────────────── */
+.nav-item { display:flex; align-items:center; gap:9px; padding:7px 12px; border-radius:3px; cursor:pointer; font-size:12px; font-weight:500; transition:all .15s; margin-bottom:1px; border: 1px solid transparent; }
+.nav-item:hover { background: rgba(0,136,255,.08); color: var(--text); border-color: rgba(0,136,255,.15); }
+.nav-item.active { background: rgba(0,136,255,.14); color: var(--blue2); border-color: rgba(0,136,255,.3); }
+.nav-item.active .nav-icon { color: var(--blue2); }
+.nav-icon { font-size:13px; width:16px; text-align:center; }
+
+/* ── Section label ──────────────────────────────────────────────────────── */
+.sec-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); font-family:'JetBrains Mono',monospace; margin-bottom:8px; }
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width:3px; height:3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius:2px; }
+
+/* ── Grid line bg ───────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+
+/* ── Mandate card ───────────────────────────────────────────────────────── */
+@keyframes warn-pulse { 0%,100%{border-color:rgba(255,214,0,.4)} 50%{border-color:rgba(255,214,0,.8)} }
+.mandate-card { animation: warn-pulse 1.5s ease-in-out infinite; }
+
+/* ── Corner accent ──────────────────────────────────────────────────────── */
+.corner-tl::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:1.5px solid var(--blue); border-left:1.5px solid var(--blue); }
+.corner-br::after  { content:''; position:absolute; bottom:0; right:0; width:10px; height:10px; border-bottom:1.5px solid var(--blue); border-right:1.5px solid var(--blue); }

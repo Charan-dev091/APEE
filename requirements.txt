@@ -1,0 +1,20 @@
+# ── Core (root main.py — Trading + E-Commerce pipeline) ──────────────────────
+groq>=0.9.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+yfinance>=0.2.36
+websockets>=12.0
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# ── Advanced path (src/agents/orchestrator.py + src/agents/strategist.py) ────
+# Required if running the Hyperliquid+Claude pipeline (src/main.py)
+anthropic>=0.25.0
+numpy>=1.26.0
+
+# ── Optional — ML model training & inference (src/agents/analyst.py) ─────────
+# Install to enable LightGBM directional signals:
+#   pip install lightgbm pandas pyarrow
+# lightgbm>=4.3.0
+# pandas>=2.0.0
+# pyarrow>=14.0.0

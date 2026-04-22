@@ -1,0 +1,58 @@
+# ── Secrets — NEVER commit these ─────────────────────────────────────────────
+.env
+*.key
+*.pem
+
+# ── Runtime logs & state (regenerated on every run) ──────────────────────────
+logs/events.jsonl
+logs/gate_decisions.jsonl
+logs/portfolio_history.jsonl
+logs/state.json
+logs/app_config.json
+logs/rag_query.json
+logs/rag_result.json
+
+# Keep the chroma_db out — it is rebuilt automatically by rag_server.py
+logs/chroma_db/
+
+# Hyperliquid-side runtime files (src/main.py path)
+diary.jsonl
+decisions.jsonl
+prompts.log
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+.venv/
+venv/
+env/
+.env.local
+
+# ── ML model files (large binaries — store in cloud or DVC) ──────────────────
+*.txt.model
+apee_data/
+*.parquet
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/.cache/
+dashboard/UserskarraDownloadsAPEElogs/
+
+# ── OS & Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
